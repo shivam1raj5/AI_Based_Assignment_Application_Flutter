@@ -30,7 +30,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _questionController = TextEditingController();
+  String question = '';
 
+  final TextEditingController _tagsController = TextEditingController();
+  String tags = '';
+
+  String language = 'English';
+  List<String> dropdownItems = ['English', 'Hindi', 'Punjabi'];
+
+  final TextEditingController _wordsizeController = TextEditingController();
+  String wordsize = '';
+
+  String finalQuestion = '';
 
   @override
   Widget build(BuildContext context) {
