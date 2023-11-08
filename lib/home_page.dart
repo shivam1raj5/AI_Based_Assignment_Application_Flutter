@@ -1,6 +1,7 @@
 import 'package:ai_driven_essay_application_flutter/api/chat_api.dart';
 import 'package:ai_driven_essay_application_flutter/chat_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String finalQuestion = '';
 
   void _showToast(BuildContext context) {
+    Toast.LENGTH_SHORT;
     const snackBar = SnackBar(content: Text('Add Subject of Essay Please.'));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
