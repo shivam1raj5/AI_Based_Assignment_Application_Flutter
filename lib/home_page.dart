@@ -186,6 +186,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: OutlinedButton(
                               onPressed: () {
                                 if (_questionController.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Please Add Subject.')),
+                                  );
                                 } else {
                                   setState(() {
                                     finalQuestion =
