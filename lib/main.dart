@@ -19,7 +19,6 @@ class MainApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      //home: ChatPage(chatApi: chatApi),
       home: MyHomePage(title: 'AI_Driven_Essay_Application_Flutter', chatApi: chatApi),
     );
   }
