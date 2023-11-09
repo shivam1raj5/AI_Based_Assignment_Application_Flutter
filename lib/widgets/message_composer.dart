@@ -17,14 +17,6 @@ class MessageComposer extends StatefulWidget {
 }
 
 class _MessageComposerState extends State<MessageComposer> {
-  String resBtn = 'Click to Generate';
-
-  void _changeText() {
-    setState(() {
-      resBtn = 'Re-Generate';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +33,6 @@ class _MessageComposerState extends State<MessageComposer> {
                       child: ElevatedButton(
                           onPressed: !widget.awaitingResponse
                               ? () {
-                                  _changeText();
                                   widget.onSubmitted(widget.finalQuestion);
                                 }
                               : null,
@@ -49,9 +40,9 @@ class _MessageComposerState extends State<MessageComposer> {
                             backgroundColor: const Color.fromARGB(
                                 255, 210, 187, 255), // Background color
                           ),
-                          child: Text(
-                            resBtn,
-                            style: const TextStyle(
+                          child: const Text(
+                            'Re-Generate',
+                            style: TextStyle(
                                 fontSize: 20,
                                 color: Color.fromARGB(255, 0, 128, 255)),
                           )))

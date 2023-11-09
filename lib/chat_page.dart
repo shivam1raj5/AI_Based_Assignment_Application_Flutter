@@ -19,10 +19,15 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  @override
+  void initState() {
+    super.initState();
+    _onSubmitted(widget.finalQuestion);
+  }
+
   final _messages = <ChatMessage>[];
   var _awaitingResponse = false;
   final _scrollController = ScrollController();
-
   @override
   void dispose() {
     _scrollController.dispose();

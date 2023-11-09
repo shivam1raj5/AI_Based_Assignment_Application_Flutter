@@ -208,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     255, 210, 187, 255), // Background color
                               ),
                               child: const Text(
-                                'Submit',
+                                'Generate',
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Color.fromARGB(255, 0, 128, 255)),
