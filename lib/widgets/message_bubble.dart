@@ -16,7 +16,7 @@ class MessageBubble extends StatelessWidget {
       return Container(
         margin: const EdgeInsets.all(8),
         decoration: const BoxDecoration(
-          color: Color.fromRGBO(35, 35, 35, 1),
+          color: Color.fromRGBO(35, 35, 35, 5),
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         child: Padding(

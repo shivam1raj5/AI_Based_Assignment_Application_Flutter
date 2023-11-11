@@ -93,6 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: IconButton(
                 icon: const Icon(Icons.person),
                 onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Profile not created yet.')),
+                  );
                   Scaffold.of(context).openDrawer();
                 },
                 color: const Color.fromRGBO(11, 240, 255, 1),
@@ -350,18 +353,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                   content: Text('Please Add Subject.')),
                             );
                           } else {
-                                  setState(() {
-                                    finalQuestion =
-                                        "$s1$question$s2$tags$s3$language$s4$wordsize$s5";
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) => ChatPage(
-                                          chatApi: widget.chatApi,
-                                          finalQuestion: finalQuestion,
-                                          title: widget.title),
-                                    ));
-                                  });
-                                }
+                            setState(() {
+                              finalQuestion =
+                                  "$s1$question$s2$tags$s3$language$s4$wordsize$s5";
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ChatPage(
+                                    chatApi: widget.chatApi,
+                                    finalQuestion: finalQuestion,
+                                    title: widget.title),
+                              ));
+                            });
+                          }
                         },
                         style: OutlinedButton.styleFrom(
                           backgroundColor: const Color.fromRGBO(0, 255, 194, 1),

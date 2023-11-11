@@ -43,42 +43,39 @@ class _ChatPageState extends State<ChatPage> {
         iconTheme: const IconThemeData(
           color: Colors.white,
         ),
-        title: Container(
-          padding: const EdgeInsets.only(left: 5),
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  ShaderMask(
-                    shaderCallback: (Rect bounds) {
-                      return const LinearGradient(
-                        colors: [Colors.blue, Colors.green],
-                        tileMode: TileMode.clamp,
-                      ).createShader(bounds);
-                    },
-                    child: Text(
-                      widget.title,
-                      style: const TextStyle(
-                        color: Color.fromRGBO(11, 240, 255, 1),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                      ),
+        title: Row(
+          children: [
+            Column(
+              children: [
+                ShaderMask(
+                  shaderCallback: (Rect bounds) {
+                    return const LinearGradient(
+                      colors: [Colors.blue, Colors.green],
+                      tileMode: TileMode.clamp,
+                    ).createShader(bounds);
+                  },
+                  child: Text(
+                    widget.title,
+                    style: const TextStyle(
+                      color: Color.fromRGBO(11, 240, 255, 1),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
                     ),
                   ),
-                  const SizedBox(
-                    width: 82,
-                    child: Text(
-                      'Shivam Raj,',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
+                ),
+                const SizedBox(
+                  width: 82,
+                  child: Text(
+                    'Shivam Raj,',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
           Container(
@@ -93,6 +90,9 @@ class _ChatPageState extends State<ChatPage> {
             child: IconButton(
               icon: const Icon(Icons.person),
               onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Profile not created yet.')),
+                );
                 Scaffold.of(context).openDrawer();
               },
               color: const Color.fromRGBO(11, 240, 255, 1),
