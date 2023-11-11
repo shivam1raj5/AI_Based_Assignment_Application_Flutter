@@ -14,12 +14,16 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'AI_Driven_Essay_Application_Flutter',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primaryColor: const Color(0xFF171717),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF171717),
+        ),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: 'AI_Driven_Essay_Application_Flutter', chatApi: chatApi),
+      home: MyHomePage(title: 'WELCOME', chatApi: chatApi),
     );
   }
 }
