@@ -9,12 +9,14 @@ class ChatPage extends StatefulWidget {
     required this.chatApi,
     required this.finalQuestion,
     required this.title,
+    required this.question,
     super.key,
   });
 
   final ChatApi chatApi;
   final String finalQuestion;
   final String title;
+  final String question;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -38,6 +40,10 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    const String subject1 = 'Subject : ';
+    String subject2 = widget.question;
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -104,6 +110,31 @@ class _ChatPageState extends State<ChatPage> {
         color: Colors.black,
         child: Column(
           children: [
+            Container(
+              width: screenWidth * 1,
+              height: 35,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(
+                      "$subject1$subject2",
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
+                    ),
+                  ),
+                  IconButton(
+                icon: const Icon(Icons.share),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Share function not available.')),
+                  );
+                },
+                color: Colors.white,
+              ),
+                ],
+              ),
+            ),
             Expanded(
                 child: ListView.builder(
               controller: _scrollController,

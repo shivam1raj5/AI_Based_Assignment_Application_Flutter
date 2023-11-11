@@ -360,7 +360,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 builder: (context) => ChatPage(
                                     chatApi: widget.chatApi,
                                     finalQuestion: finalQuestion,
-                                    title: widget.title),
+                                    title: widget.title,
+                                    question: question),
                               ));
                             });
                           }
