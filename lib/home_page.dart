@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     const SizedBox(
                       width: 82,
                       child: Text(
-                        'Shivam Raj',
+                        'Shivam Raj,',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 8,
@@ -357,7 +357,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         .push(MaterialPageRoute(
                                       builder: (context) => ChatPage(
                                           chatApi: widget.chatApi,
-                                          finalQuestion: finalQuestion),
+                                          finalQuestion: finalQuestion,
+                                          title: widget.title),
                                     ));
                                   });
                                 }

@@ -32,6 +32,7 @@ dependencies:
   dart_openai: ^1.8.0
   flutter:
     sdk: flutter
+  flutter_markdown: ^0.6.18+2
   markdown_widget: ^2.0.0+1
 
 

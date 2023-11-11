@@ -8,11 +8,13 @@ class ChatPage extends StatefulWidget {
   const ChatPage({
     required this.chatApi,
     required this.finalQuestion,
+    required this.title,
     super.key,
   });
 
   final ChatApi chatApi;
   final String finalQuestion;
+  final String title;
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -38,31 +40,88 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'AI_Driven_Essay_Application_Flutter',
-          style: TextStyle(color: Colors.black),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
         ),
-        backgroundColor: const Color.fromARGB(255, 210, 187, 255),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-            controller: _scrollController,
-            itemCount: _messages.length,
-            itemBuilder: (context, index) {
-              return MessageBubble(
-                content: _messages[index].content,
-                isUserMessage: _messages[index].isUserMessage,
-              );
-            },
-          )),
-          MessageComposer(
-            onSubmitted: _onSubmitted,
-            finalQuestion: widget.finalQuestion,
-            awaitingResponse: _awaitingResponse,
+        title: Container(
+          padding: const EdgeInsets.only(left: 5),
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  ShaderMask(
+                    shaderCallback: (Rect bounds) {
+                      return const LinearGradient(
+                        colors: [Colors.blue, Colors.green],
+                        tileMode: TileMode.clamp,
+                      ).createShader(bounds);
+                    },
+                    child: Text(
+                      widget.title,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(11, 240, 255, 1),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 82,
+                    child: Text(
+                      'Shivam Raj,',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
+        ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(
+                right: 20.0, left: 8.0, top: 8.0, bottom: 8.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.white,
+              ),
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+              color: const Color.fromRGBO(11, 240, 255, 1),
+            ),
+          )
         ],
+      ),
+      body: Container(
+        color: Colors.black,
+        child: Column(
+          children: [
+            Expanded(
+                child: ListView.builder(
+              controller: _scrollController,
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                return MessageBubble(
+                  content: _messages[index].content,
+                  isUserMessage: _messages[index].isUserMessage,
+                );
+              },
+            )),
+            MessageComposer(
+              onSubmitted: _onSubmitted,
+              finalQuestion: widget.finalQuestion,
+              awaitingResponse: _awaitingResponse,
+            ),
+          ],
+        ),
       ),
     );
   }
