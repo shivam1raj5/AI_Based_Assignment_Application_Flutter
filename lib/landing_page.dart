@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -135,7 +136,11 @@ class _LandingPageState extends State<LandingPage> {
                           width: width - 40,
                           height: 50,
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Signin(),
+                                ));
+                            },
                             style: OutlinedButton.styleFrom(
                               backgroundColor:
                                   const Color.fromARGB(255, 0, 255, 174),

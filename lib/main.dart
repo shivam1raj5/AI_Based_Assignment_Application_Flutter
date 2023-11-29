@@ -1,4 +1,4 @@
-import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/landing_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const LandingPage(),
     );
   }
 }

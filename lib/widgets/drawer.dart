@@ -1,3 +1,4 @@
+import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -7,7 +8,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-          color: const Color.fromRGBO(35, 35, 35, 5),
+        color: const Color.fromRGBO(35, 35, 35, 5),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -24,9 +25,14 @@ class MyDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: const Text('Logout',style: TextStyle(color: Colors.white),),
+              title: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.white),
+              ),
               onTap: () {
-                // Handle drawer item tap
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const Signin(),
+                ));
               },
             ),
           ],

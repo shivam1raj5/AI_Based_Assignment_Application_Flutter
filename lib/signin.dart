@@ -1,3 +1,5 @@
+import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/signup.dart';
 import 'package:flutter/material.dart';
 
 class Signin extends StatefulWidget {
@@ -68,18 +70,15 @@ class _SigninState extends State<Signin> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       buildOutlinedButton("Log in", () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Edit function not available.')),
-                        );
+                        Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const EssayMyHomePage(),
+                                ));
                       }),
                       const SizedBox(width: 20),
                       buildOutlinedButton("Sign up", () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content:
-                                  Text('Plagiarism function not available.')),
-                        );
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Signup(),
+                        ));
                       }),
                     ],
                   ),

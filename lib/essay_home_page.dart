@@ -3,16 +3,16 @@ import 'package:ai_driven_essay_application_flutter/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_driven_essay_application_flutter/chat_page.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
+class EssayMyHomePage extends StatefulWidget {
+  const EssayMyHomePage({
     super.key,
   });
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<EssayMyHomePage> createState() => _EssayMyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _EssayMyHomePageState extends State<EssayMyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String s1 = 'Write an essay on ',
       s2 = ' include ',

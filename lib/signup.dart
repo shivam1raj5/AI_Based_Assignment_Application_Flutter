@@ -1,3 +1,4 @@
+import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -75,7 +76,7 @@ class _SignupState extends State<Signup> {
                           buildOutlinedButton1("Register", () {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                content: Text('Edit function not available.'),
+                                content: Text('Register function not available.'),
                               ),
                             );
                           }),
@@ -84,7 +85,7 @@ class _SignupState extends State<Signup> {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content:
-                                    Text('Plagiarism function not available.'),
+                                    Text('Google function not available.'),
                               ),
                             );
                           }),
@@ -103,7 +104,11 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Signin(),
+                                ));
+                              },
                               child: const Text(
                                 " Log in",
                                 style: TextStyle(
