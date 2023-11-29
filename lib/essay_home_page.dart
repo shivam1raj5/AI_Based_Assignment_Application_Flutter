@@ -214,7 +214,8 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                                   ),
                                 );
                               }).toList(),
-                              dropdownColor: const Color.fromRGBO(35, 35, 35, 1),
+                              dropdownColor:
+                                  const Color.fromRGBO(35, 35, 35, 1),
                               iconSize: 30,
                               underline: Container(
                                 height: 0,
@@ -271,7 +272,8 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                                   color: Color.fromRGBO(112, 108, 108, 39),
                                   fontFamily: 'Poppins',
                                 ),
-                                contentPadding: EdgeInsets.only(left: 15, top: 3),
+                                contentPadding:
+                                    EdgeInsets.only(left: 15, top: 3),
                                 enabledBorder: InputBorder.none,
                                 focusedBorder: InputBorder.none,
                               ),
@@ -310,7 +312,8 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                             }
                           },
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color.fromRGBO(0, 255, 194, 1),
+                            backgroundColor:
+                                const Color.fromRGBO(0, 255, 194, 1),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0),
                             ),

@@ -137,9 +137,11 @@ class _LandingPageState extends State<LandingPage> {
                           height: 50,
                           child: OutlinedButton(
                             onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const Signin(),
-                                ));
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Signin(),
+                                  ));
                             },
                             style: OutlinedButton.styleFrom(
                               backgroundColor:
