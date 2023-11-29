@@ -1,21 +1,19 @@
 import 'package:ai_driven_essay_application_flutter/api/chat_api.dart';
 import 'package:ai_driven_essay_application_flutter/models/chat_message.dart';
+import 'package:ai_driven_essay_application_flutter/widgets/appbar.dart';
+import 'package:ai_driven_essay_application_flutter/widgets/drawer.dart';
 import 'package:ai_driven_essay_application_flutter/widgets/message_bubble.dart';
 import 'package:ai_driven_essay_application_flutter/widgets/message_composer.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({
-    required this.chatApi,
     required this.finalQuestion,
-    required this.title,
     required this.question,
     super.key,
   });
 
-  final ChatApi chatApi;
   final String finalQuestion;
-  final String title;
   final String question;
 
   @override
@@ -23,6 +21,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();
@@ -44,114 +43,64 @@ class _ChatPageState extends State<ChatPage> {
     const String subject1 = 'Subject : ';
     String subject2 = widget.question;
 
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+    return SafeArea(
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: CustomAppBar(
+          scaffoldKey: _scaffoldKey,
+          onProfilePressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
         ),
-        title: Row(
-          children: [
-            Column(
-              children: [
-                ShaderMask(
-                  shaderCallback: (Rect bounds) {
-                    return const LinearGradient(
-                      colors: [Colors.blue, Colors.green],
-                      tileMode: TileMode.clamp,
-                    ).createShader(bounds);
-                  },
-                  child: Text(
-                    widget.title,
-                    style: const TextStyle(
-                      color: Color.fromRGBO(11, 240, 255, 1),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
+        drawer: const MyDrawer(),
+        body: Container(
+          color: Colors.black,
+          child: Column(
+            children: [
+              SizedBox(
+                width: screenWidth * 1,
+                height: 35,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(
+                        "$subject1$subject2",
+                        style: const TextStyle(color: Colors.white, fontSize: 15),
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 82,
-                  child: Text(
-                    'Shivam Raj,',
-                    style: TextStyle(
+                    IconButton(
+                      icon: const Icon(Icons.share),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Share function not available.')),
+                        );
+                      },
                       color: Colors.white,
-                      fontSize: 8,
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(
-                right: 20.0, left: 8.0, top: 8.0, bottom: 8.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
               ),
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.person),
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Profile not created yet.')),
-                );
-                Scaffold.of(context).openDrawer();
-              },
-              color: const Color.fromRGBO(11, 240, 255, 1),
-            ),
-          )
-        ],
-      ),
-      body: Container(
-        color: Colors.black,
-        child: Column(
-          children: [
-            Container(
-              width: screenWidth * 1,
-              height: 35,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      "$subject1$subject2",
-                      style: const TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                  ),
-                  IconButton(
-                icon: const Icon(Icons.share),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Share function not available.')),
+              Expanded(
+                  child: ListView.builder(
+                controller: _scrollController,
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  return MessageBubble(
+                    content: _messages[index].content,
+                    isUserMessage: _messages[index].isUserMessage,
                   );
                 },
-                color: Colors.white,
+              )),
+              MessageComposer(
+                onSubmitted: _onSubmitted,
+                finalQuestion: widget.finalQuestion,
+                awaitingResponse: _awaitingResponse,
               ),
-                ],
-              ),
-            ),
-            Expanded(
-                child: ListView.builder(
-              controller: _scrollController,
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                return MessageBubble(
-                  content: _messages[index].content,
-                  isUserMessage: _messages[index].isUserMessage,
-                );
-              },
-            )),
-            MessageComposer(
-              onSubmitted: _onSubmitted,
-              finalQuestion: widget.finalQuestion,
-              awaitingResponse: _awaitingResponse,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -163,7 +112,7 @@ class _ChatPageState extends State<ChatPage> {
       _awaitingResponse = true;
     });
     try {
-      final response = await widget.chatApi.completeChat(_messages);
+      final response = await ChatApi().completeChat(_messages);
       setState(() {
         _messages.add(ChatMessage(response, false));
         _awaitingResponse = false;

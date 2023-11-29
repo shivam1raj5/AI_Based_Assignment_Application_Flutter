@@ -1,15 +1,12 @@
-import 'package:ai_driven_essay_application_flutter/api/chat_api.dart';
-import 'package:ai_driven_essay_application_flutter/home_page.dart';
+import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MainApp(chatApi: ChatApi()));
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({required this.chatApi, super.key});
-
-  final ChatApi chatApi;
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,7 @@ class MainApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: MyHomePage(title: 'WELCOME', chatApi: chatApi),
+      home: const MyHomePage(),
     );
   }
 }
