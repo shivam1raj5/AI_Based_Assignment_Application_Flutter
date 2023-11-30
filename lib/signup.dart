@@ -101,23 +101,11 @@ class _SignupState extends State<Signup> {
                           }),
                           const SizedBox(width: 20),
                           buildOutlinedButton2("Sign up with Google", () {
-                            if (nameController.text.isEmpty ||
-                                emailController.text.isEmpty ||
-                                passwordController.text.isEmpty ||
-                                confirmpasswordController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please fill in all fields.'),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('Google function not available.'),
-                                ),
-                              );
-                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Google function not available.'),
+                              ),
+                            );
                           }),
                         ],
                       ),
