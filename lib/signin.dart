@@ -1,6 +1,10 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
 import 'package:ai_driven_essay_application_flutter/signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -72,7 +76,7 @@ class _SigninState extends State<Signin> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildOutlinedButton("Log in", () {
+                      buildOutlinedButton("Login", () {
                         if (emailController.text.isEmpty ||
                             passwordController.text.isEmpty) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -81,19 +85,39 @@ class _SigninState extends State<Signin> {
                             ),
                           );
                         } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const EssayMyHomePage(),
-                          ));
+                          FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: emailController.text,
+                                  password: passwordController.text)
+                              .then((value) {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const EssayMyHomePage(),
+                            ));
+                          }).onError((error, stackTrace) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Error - Username/Password not matched"),
+                              ),
+                            );
+                          });
                         }
                       }),
                       const SizedBox(width: 20),
-                      buildOutlinedButton("Sign up", () {
+                      buildOutlinedButton("Signup", () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => const Signup(),
                         ));
                       }),
                     ],
                   ),
+                  const SizedBox(width: 20),
+                          buildOutlinedButton2("Login  with Google", () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Google function not available.'),
+                              ),
+                            );
+                          }),
                 ],
               ),
             ),
@@ -166,6 +190,37 @@ class _SigninState extends State<Signin> {
         child: Text(
           label,
           style: const TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  Widget buildOutlinedButton2(String label, VoidCallback onPressed) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20),
+      width: 275,
+      height: 35,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 0, 255, 174),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              FontAwesomeIcons.google,
+              color: Colors.black,
+            ),
+            const SizedBox(width: 15),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ],
         ),
       ),
     );

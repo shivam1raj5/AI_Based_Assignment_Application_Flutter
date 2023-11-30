@@ -1,4 +1,5 @@
 import 'package:ai_driven_essay_application_flutter/signin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -30,9 +31,12 @@ class MyDrawer extends StatelessWidget {
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const Signin(),
-                ));
+                FirebaseAuth.instance.signOut().then((value) {
+                  print("Sign out");
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Signin(),
+                  ));
+                });
               },
             ),
           ],

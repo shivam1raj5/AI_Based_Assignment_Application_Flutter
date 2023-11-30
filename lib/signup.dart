@@ -1,6 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:ai_driven_essay_application_flutter/signin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class _SignupState extends State<Signup> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -91,21 +94,33 @@ class _SignupState extends State<Signup> {
                                 ),
                               );
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('Register function not available.'),
-                                ),
-                              );
+                              if (passwordController.text ==
+                                  confirmpasswordController.text) {
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: emailController.text,
+                                        password: passwordController.text)
+                                    .then((value) {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const Signin(),
+                                  ));
+                                }).onError((error, stackTrace) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                          "Error- Make sure right email or password length not less than 6 digits."),
+                                    ),
+                                  );
+                                });
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content:
+                                        Text("Both Passwort should must be same."),
+                                  ),
+                                );
+                              }
                             }
-                          }),
-                          const SizedBox(width: 20),
-                          buildOutlinedButton2("Sign up with Google", () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Google function not available.'),
-                              ),
-                            );
                           }),
                         ],
                       ),
@@ -128,7 +143,7 @@ class _SignupState extends State<Signup> {
                                 ));
                               },
                               child: const Text(
-                                " Log in",
+                                " Login",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -214,37 +229,6 @@ class _SignupState extends State<Signup> {
         child: Text(
           label,
           style: const TextStyle(color: Colors.black),
-        ),
-      ),
-    );
-  }
-
-  Widget buildOutlinedButton2(String label, VoidCallback onPressed) {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      width: 275,
-      height: 35,
-      child: OutlinedButton(
-        onPressed: onPressed,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 0, 255, 174),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              FontAwesomeIcons.google,
-              color: Colors.black,
-            ),
-            const SizedBox(width: 15),
-            Text(
-              label,
-              style: const TextStyle(color: Colors.black),
-            ),
-          ],
         ),
       ),
     );

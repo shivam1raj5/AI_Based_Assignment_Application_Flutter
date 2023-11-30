@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631628562411",
+    "project_id": "chatgptbasedapp",
+    "storage_bucket": "chatgptbasedapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631628562411:android:afcd33198e1418d96ea3ae",
+        "android_client_info": {
+          "package_name": "com.example.ai_driven_essay_application_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAF0VJN63m4ZSxQOgDJZx9O9lf5j44MEqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
