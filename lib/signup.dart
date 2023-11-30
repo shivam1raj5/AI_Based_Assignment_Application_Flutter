@@ -16,7 +16,7 @@ class _SignupState extends State<Signup> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
-
+  bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -79,12 +79,12 @@ class _SignupState extends State<Signup> {
                           ),
                         ),
                       ),
-                      buildTextField("Name", screenWidth, nameController),
-                      buildTextField(
+                      buildTextField1("Name", screenWidth, nameController),
+                      buildTextField1(
                           "E-Mail / Phone", screenWidth, emailController),
-                      buildTextField(
+                      buildTextField2(
                           "Password", screenWidth, passwordController),
-                      buildTextField("Confirm Password", screenWidth,
+                      buildTextField2("Confirm Password", screenWidth,
                           confirmpasswordController),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +133,7 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Widget buildTextField(
+  Widget buildTextField1(
       String label, double screenWidth, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,6 +170,64 @@ class _SignupState extends State<Signup> {
                 fontFamily: 'Poppins',
               ),
               contentPadding: EdgeInsets.all(12.0),
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+            style: const TextStyle(color: Colors.white),
+            cursorColor: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTextField2(
+      String label, double screenWidth, TextEditingController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 5.0, bottom: 10),
+          width: screenWidth * 0.7,
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color.fromRGBO(11, 240, 255, 1),
+            ),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: TextFormField(
+            controller: controller,
+            keyboardType: TextInputType.text,
+            obscureText: !_passwordVisible,
+            onChanged: (value) {
+              setState(() {});
+            },
+            decoration: InputDecoration(
+              hintText: 'Type your text here',
+              hintStyle: const TextStyle(
+                color: Color.fromRGBO(112, 108, 108, 39),
+                fontFamily: 'Poppins',
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+              contentPadding: const EdgeInsets.all(12.0),
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),

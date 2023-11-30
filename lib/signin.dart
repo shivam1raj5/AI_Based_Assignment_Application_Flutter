@@ -16,6 +16,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class _SigninState extends State<Signin> {
                       ),
                     ),
                   ),
-                  buildTextField(
+                  buildTextField1(
                       "E-Mail / Phone", screenWidth, emailController),
                   buildTextField2("Password", screenWidth, passwordController),
                   Row(
@@ -105,7 +106,7 @@ class _SigninState extends State<Signin> {
     );
   }
 
-  Widget buildTextField(
+  Widget buildTextField1(
       String label, double screenWidth, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -175,21 +176,31 @@ class _SigninState extends State<Signin> {
             ),
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: TextField(
+          child: TextFormField(
             controller: controller,
+            keyboardType: TextInputType.text,
+            obscureText: !_passwordVisible,
             onChanged: (value) {
               setState(() {});
             },
-            maxLines: null,
-            expands: true,
-            keyboardType: TextInputType.multiline,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: 'Type your text here',
-              hintStyle: TextStyle(
+              hintStyle: const TextStyle(
                 color: Color.fromRGBO(112, 108, 108, 39),
                 fontFamily: 'Poppins',
               ),
-              contentPadding: EdgeInsets.all(12.0),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+              contentPadding: const EdgeInsets.all(12.0),
               enabledBorder: InputBorder.none,
               focusedBorder: InputBorder.none,
             ),
