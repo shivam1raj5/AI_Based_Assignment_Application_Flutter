@@ -40,7 +40,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    const String subject1 = 'Subject : ';
+    const String subject1 = 'Title : ';
     String subject2 = widget.question;
 
     return SafeArea(

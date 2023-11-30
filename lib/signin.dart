@@ -10,6 +10,8 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -64,15 +66,25 @@ class _SigninState extends State<Signin> {
                       ),
                     ),
                   ),
-                  buildTextField("E-Mail / Phone", screenWidth),
-                  buildTextField("Password", screenWidth),
+                  buildTextField(
+                      "E-Mail / Phone", screenWidth, emailController),
+                  buildTextField("Password", screenWidth, passwordController),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       buildOutlinedButton("Log in", () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const EssayMyHomePage(),
-                                ));
+                        if (emailController.text.isEmpty ||
+                            passwordController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Please fill in all fields.'),
+                            ),
+                          );
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const EssayMyHomePage(),
+                          ));
+                        }
                       }),
                       const SizedBox(width: 20),
                       buildOutlinedButton("Sign up", () {
@@ -91,7 +103,8 @@ class _SigninState extends State<Signin> {
     );
   }
 
-  Widget buildTextField(String label, double screenWidth) {
+  Widget buildTextField(
+      String label, double screenWidth, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,6 +126,7 @@ class _SigninState extends State<Signin> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: TextField(
+            controller: controller,
             onChanged: (value) {
               setState(() {});
             },

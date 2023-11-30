@@ -10,6 +10,10 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,28 +70,54 @@ class _SignupState extends State<Signup> {
                           ),
                         ),
                       ),
-                      buildTextField("Name", screenWidth),
-                      buildTextField("E-Mail / Phone", screenWidth),
-                      buildTextField("Password", screenWidth),
-                      buildTextField("Confirm Password", screenWidth),
+                      buildTextField("Name", screenWidth, nameController),
+                      buildTextField(
+                          "E-Mail / Phone", screenWidth, emailController),
+                      buildTextField(
+                          "Password", screenWidth, passwordController),
+                      buildTextField("Confirm Password", screenWidth,
+                          confirmpasswordController),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           buildOutlinedButton1("Register", () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Register function not available.'),
-                              ),
-                            );
+                            if (nameController.text.isEmpty ||
+                                emailController.text.isEmpty ||
+                                passwordController.text.isEmpty ||
+                                confirmpasswordController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please fill in all fields.'),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Register function not available.'),
+                                ),
+                              );
+                            }
                           }),
                           const SizedBox(width: 20),
                           buildOutlinedButton2("Sign up with Google", () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('Google function not available.'),
-                              ),
-                            );
+                            if (nameController.text.isEmpty ||
+                                emailController.text.isEmpty ||
+                                passwordController.text.isEmpty ||
+                                confirmpasswordController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please fill in all fields.'),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Google function not available.'),
+                                ),
+                              );
+                            }
                           }),
                         ],
                       ),
@@ -132,7 +162,8 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Widget buildTextField(String label, double screenWidth) {
+  Widget buildTextField(
+      String label, double screenWidth, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -154,6 +185,7 @@ class _SignupState extends State<Signup> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: TextField(
+            controller: controller,
             onChanged: (value) {
               setState(() {});
             },
