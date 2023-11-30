@@ -33,19 +33,25 @@ class _SignupState extends State<Signup> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ShaderMask(
-                        shaderCallback: (Rect bounds) {
-                          return const LinearGradient(
-                            colors: [Colors.blue, Colors.green],
-                            tileMode: TileMode.clamp,
-                          ).createShader(bounds);
-                        },
-                        child: const Text(
-                          'Welcome',
-                          style: TextStyle(
-                            color: Color.fromRGBO(11, 240, 255, 1),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 40.0,
+                      SizedBox(
+                        width: 200, // Set an explicit width
+                        height: 50, // Set an explicit height
+                        child: ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return const LinearGradient(
+                              colors: [Colors.blue, Colors.green],
+                              tileMode: TileMode.clamp,
+                            ).createShader(bounds);
+                          },
+                          child: const Center(
+                            child: Text(
+                              'Welcome',
+                              style: TextStyle(
+                                color: Color.fromRGBO(11, 240, 255, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 40.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -83,45 +89,7 @@ class _SignupState extends State<Signup> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          buildOutlinedButton1("Register", () {
-                            if (nameController.text.isEmpty ||
-                                emailController.text.isEmpty ||
-                                passwordController.text.isEmpty ||
-                                confirmpasswordController.text.isEmpty) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please fill in all fields.'),
-                                ),
-                              );
-                            } else {
-                              if (passwordController.text ==
-                                  confirmpasswordController.text) {
-                                FirebaseAuth.instance
-                                    .createUserWithEmailAndPassword(
-                                        email: emailController.text,
-                                        password: passwordController.text)
-                                    .then((value) {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const Signin(),
-                                  ));
-                                }).onError((error, stackTrace) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text(
-                                          "Error- Make sure right email or password length not less than 6 digits."),
-                                    ),
-                                  );
-                                });
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text("Both Passwort should must be same."),
-                                  ),
-                                );
-                              }
-                            }
-                          }),
+                          buildOutlinedButton1("Register", _registerUser),
                         ],
                       ),
                       Container(
@@ -232,5 +200,42 @@ class _SignupState extends State<Signup> {
         ),
       ),
     );
+  }
+
+  void _registerUser() {
+    if (nameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmpasswordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields.'),
+        ),
+      );
+    } else {
+      if (passwordController.text == confirmpasswordController.text) {
+        FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text)
+            .then((value) {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const Signin(),
+          ));
+        }).onError((error, stackTrace) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                  "Error- Make sure right email or password length not less than 6 digits."),
+            ),
+          );
+        });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Both Passwords should be the same."),
+          ),
+        );
+      }
+    }
   }
 }

@@ -32,7 +32,6 @@ class MyDrawer extends StatelessWidget {
               ),
               onTap: () {
                 FirebaseAuth.instance.signOut().then((value) {
-                  print("Sign out");
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const Signin(),
                   ));

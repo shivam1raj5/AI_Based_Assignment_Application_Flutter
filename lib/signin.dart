@@ -16,6 +16,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -33,6 +34,8 @@ class _SigninState extends State<Signin> {
                   ShaderMask(
                     shaderCallback: (Rect bounds) {
                       return const LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                         colors: [Colors.blue, Colors.green],
                         tileMode: TileMode.clamp,
                       ).createShader(bounds);
@@ -72,52 +75,27 @@ class _SigninState extends State<Signin> {
                   ),
                   buildTextField(
                       "E-Mail / Phone", screenWidth, emailController),
-                  buildTextField("Password", screenWidth, passwordController),
+                  buildTextField2("Password", screenWidth, passwordController),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       buildOutlinedButton("Login", () {
-                        if (emailController.text.isEmpty ||
-                            passwordController.text.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Please fill in all fields.'),
-                            ),
-                          );
-                        } else {
-                          FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: emailController.text,
-                                  password: passwordController.text)
-                              .then((value) {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const EssayMyHomePage(),
-                            ));
-                          }).onError((error, stackTrace) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Error - Username/Password not matched"),
-                              ),
-                            );
-                          });
-                        }
+                        handleLogin();
                       }),
                       const SizedBox(width: 20),
                       buildOutlinedButton("Signup", () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Signup(),
-                        ));
+                        navigateToSignup();
                       }),
                     ],
                   ),
                   const SizedBox(width: 20),
-                          buildOutlinedButton2("Login  with Google", () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Google function not available.'),
-                              ),
-                            );
-                          }),
+                  buildOutlinedButton2("Login with Google", () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Google function not available.'),
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -128,6 +106,54 @@ class _SigninState extends State<Signin> {
   }
 
   Widget buildTextField(
+      String label, double screenWidth, TextEditingController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 5.0, bottom: 25),
+          width: screenWidth * 0.7,
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color.fromRGBO(11, 240, 255, 1),
+            ),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: TextField(
+            controller: controller,
+            onChanged: (value) {
+              setState(() {});
+            },
+            maxLines: null,
+            expands: true,
+            keyboardType: TextInputType.multiline,
+            decoration: const InputDecoration(
+              hintText: 'Type your text here',
+              hintStyle: TextStyle(
+                color: Color.fromRGBO(112, 108, 108, 39),
+                fontFamily: 'Poppins',
+              ),
+              contentPadding: EdgeInsets.all(12.0),
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+            ),
+            style: const TextStyle(color: Colors.white),
+            cursorColor: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTextField2(
       String label, double screenWidth, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,5 +250,36 @@ class _SigninState extends State<Signin> {
         ),
       ),
     );
+  }
+
+  void handleLogin() {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields.'),
+        ),
+      );
+    } else {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailController.text, password: passwordController.text)
+          .then((value) {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const EssayMyHomePage(),
+        ));
+      }).onError((error, stackTrace) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Error - Username/Password not matched."),
+          ),
+        );
+      });
+    }
+  }
+
+  void navigateToSignup() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const Signup(),
+    ));
   }
 }
