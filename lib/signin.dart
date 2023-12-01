@@ -1,10 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/landing_page.dart';
 import 'package:ai_driven_essay_application_flutter/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -91,11 +94,7 @@ class _SigninState extends State<Signin> {
                   ),
                   const SizedBox(width: 20),
                   buildOutlinedButton2("Login with Google", () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Google function not available.'),
-                      ),
-                    );
+                    signInWithGoogle();
                   }),
                 ],
               ),
@@ -192,7 +191,7 @@ class _SigninState extends State<Signin> {
               suffixIcon: IconButton(
                 icon: Icon(
                   _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Theme.of(context).primaryColorDark,
+                  color: Colors.white,
                 ),
                 onPressed: () {
                   setState(() {
@@ -275,6 +274,7 @@ class _SigninState extends State<Signin> {
           .signInWithEmailAndPassword(
               email: emailController.text, password: passwordController.text)
           .then((value) {
+        changevalSharedPreferences();
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const EssayMyHomePage(),
         ));
@@ -292,5 +292,51 @@ class _SigninState extends State<Signin> {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const Signup(),
     ));
+  }
+
+  void changevalSharedPreferences() async {
+    var sharedPref = await SharedPreferences.getInstance();
+    sharedPref.setBool(LandingPageState.KEYLOGIN, true);
+  }
+
+  
+   void signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn(
+        scopes: ['email'],
+      ).signIn();
+
+      if (googleUser == null) {
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential user = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (user.user != null) {
+        changevalSharedPreferences();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EssayMyHomePage(),
+          ),
+        );
+        print("User signed in: ${user.user!.displayName}");
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Sign-in failed')),
+        );
+      }
+    } catch (e) {
+      print("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Sign-in failed.")),
+      );
+    }
   }
 }

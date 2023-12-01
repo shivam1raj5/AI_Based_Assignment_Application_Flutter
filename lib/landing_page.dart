@@ -1,17 +1,21 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, unnecessary_null_comparison, use_build_context_synchronously
 
+import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
 import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
 
   @override
-  _LandingPageState createState() => _LandingPageState();
+  LandingPageState createState() => LandingPageState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class LandingPageState extends State<LandingPage> {
+  static const String KEYLOGIN = "login";
+
   bool showAnim = false;
   double top1 = 100;
   double top2 = 300;
@@ -64,12 +68,14 @@ class _LandingPageState extends State<LandingPage> {
                                 tileMode: TileMode.clamp,
                               ).createShader(bounds);
                             },
-                            child: const Text(
-                              'Welcome',
-                              style: TextStyle(
-                                color: Color.fromRGBO(11, 240, 255, 1),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 40.0,
+                            child: const Center(
+                              child: Text(
+                                'Welcome',
+                                style: TextStyle(
+                                  color: Color.fromRGBO(11, 240, 255, 1),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 40.0,
+                                ),
                               ),
                             ),
                           ),
@@ -137,11 +143,7 @@ class _LandingPageState extends State<LandingPage> {
                           height: 50,
                           child: OutlinedButton(
                             onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const Signin(),
-                                  ));
+                              wherewego();
                             },
                             style: OutlinedButton.styleFrom(
                               backgroundColor:
@@ -168,5 +170,31 @@ class _LandingPageState extends State<LandingPage> {
         ),
       ),
     );
+  }
+
+  void wherewego() async {
+    var sharedPref = await SharedPreferences.getInstance();
+    var isLoggedIn = sharedPref.getBool(KEYLOGIN);
+    if (isLoggedIn != null) {
+      if (isLoggedIn) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const EssayMyHomePage(),
+            ));
+      } else {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Signin(),
+            ));
+      }
+    } else {
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Signin(),
+          ));
+    }
   }
 }

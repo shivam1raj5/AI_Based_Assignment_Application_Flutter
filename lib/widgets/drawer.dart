@@ -1,6 +1,8 @@
+import 'package:ai_driven_essay_application_flutter/landing_page.dart';
 import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -30,7 +32,9 @@ class MyDrawer extends StatelessWidget {
                 'Logout',
                 style: TextStyle(color: Colors.white),
               ),
-              onTap: () {
+              onTap: () async {
+                var sharedPref = await SharedPreferences.getInstance();
+                sharedPref.setBool(LandingPageState.KEYLOGIN, false);
                 FirebaseAuth.instance.signOut().then((value) {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const Signin(),
