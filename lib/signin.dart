@@ -294,15 +294,9 @@ class _SigninState extends State<Signin> {
     ));
   }
 
-  void changevalSharedPreferences() async {
-    var sharedPref = await SharedPreferences.getInstance();
-    sharedPref.setBool(LandingPageState.KEYLOGIN, true);
-  }
-
-  
-   void signInWithGoogle() async {
+  void signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn(
+      GoogleSignInAccount? googleUser = await GoogleSignIn(
         scopes: ['email'],
       ).signIn();
 
@@ -310,13 +304,14 @@ class _SigninState extends State<Signin> {
         return;
       }
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      final AuthCredential credential = GoogleAuthProvider.credential(
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      final UserCredential user = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(credential);
 
       if (user.user != null) {
         changevalSharedPreferences();
@@ -338,5 +333,10 @@ class _SigninState extends State<Signin> {
         const SnackBar(content: Text("Sign-in failed.")),
       );
     }
+  }
+
+  void changevalSharedPreferences() async {
+    var sharedPref = await SharedPreferences.getInstance();
+    sharedPref.setBool(LandingPageState.KEYLOGIN, true);
   }
 }
