@@ -1,22 +1,29 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, camel_case_types
 
+import 'package:ai_driven_essay_application_flutter/home_page.dart';
+import 'package:ai_driven_essay_application_flutter/landing_page.dart';
 import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+class register extends StatefulWidget {
+  const register({Key? key}) : super(key: key);
 
   @override
-  _SignupState createState() => _SignupState();
+  _registerState createState() => _registerState();
 }
 
-class _SignupState extends State<Signup> {
+class _registerState extends State<register> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
   bool _passwordVisible = false;
+  bool _isRegistering = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,8 +41,8 @@ class _SignupState extends State<Signup> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(
-                        width: 200, // Set an explicit width
-                        height: 50, // Set an explicit height
+                        width: 200,
+                        height: 50,
                         child: ShaderMask(
                           shaderCallback: (Rect bounds) {
                             return const LinearGradient(
@@ -90,6 +97,10 @@ class _SignupState extends State<Signup> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           buildOutlinedButton1("Register", _registerUser),
+                          const SizedBox(width: 20),
+                          buildOutlinedButton2("Signup with Google", () {
+                            signInWithGoogle();
+                          }),
                         ],
                       ),
                       Container(
@@ -245,6 +256,33 @@ class _SignupState extends State<Signup> {
       width: 275,
       height: 35,
       child: OutlinedButton(
+        onPressed: _isRegistering
+            ? null
+            : onPressed,
+        style: OutlinedButton.styleFrom(
+          backgroundColor: const Color.fromARGB(255, 0, 255, 174),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+        ),
+        child: _isRegistering
+            ? const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              )
+            : Text(
+                label,
+                style: const TextStyle(color: Colors.black),
+              ),
+      ),
+    );
+  }
+
+  Widget buildOutlinedButton2(String label, VoidCallback onPressed) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20),
+      width: 275,
+      height: 35,
+      child: OutlinedButton(
         onPressed: onPressed,
         style: OutlinedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 0, 255, 174),
@@ -252,9 +290,19 @@ class _SignupState extends State<Signup> {
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),
-        child: Text(
-          label,
-          style: const TextStyle(color: Colors.black),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(
+              FontAwesomeIcons.google,
+              color: Colors.black,
+            ),
+            const SizedBox(width: 15),
+            Text(
+              label,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ],
         ),
       ),
     );
@@ -272,6 +320,10 @@ class _SignupState extends State<Signup> {
       );
     } else {
       if (passwordController.text == confirmpasswordController.text) {
+        setState(() {
+          _isRegistering = true;
+        });
+
         FirebaseAuth.instance
             .createUserWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
@@ -282,10 +334,13 @@ class _SignupState extends State<Signup> {
         }).onError((error, stackTrace) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text(
-                  "Error- Make sure right email or password length not less than 6 digits."),
+              content: Text("Error- All ready registerd or cridential issue."),
             ),
           );
+        }).whenComplete(() {
+          setState(() {
+            _isRegistering = false;
+          });
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -295,5 +350,51 @@ class _SignupState extends State<Signup> {
         );
       }
     }
+  }
+
+  void signInWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleUser = await GoogleSignIn(
+        scopes: ['email'],
+      ).signIn();
+
+      if (googleUser == null) {
+        return;
+      }
+
+      GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential user =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (user.user != null) {
+        changevalSharedPreferences();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomePage(),
+          ),
+        );
+        print("User signed in: ${user.user!.displayName}");
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Sign-in failed')),
+        );
+      }
+    } catch (e) {
+      print("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Sign-in failed.")),
+      );
+    }
+  }
+
+  void changevalSharedPreferences() async {
+    var sharedPref = await SharedPreferences.getInstance();
+    sharedPref.setBool(LandingPageState.KEYLOGIN, true);
   }
 }

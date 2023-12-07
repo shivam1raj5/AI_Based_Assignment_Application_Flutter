@@ -2,7 +2,7 @@
 
 import 'package:ai_driven_essay_application_flutter/home_page.dart';
 import 'package:ai_driven_essay_application_flutter/landing_page.dart';
-import 'package:ai_driven_essay_application_flutter/signup.dart';
+import 'package:ai_driven_essay_application_flutter/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +20,7 @@ class _SigninState extends State<Signin> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool _passwordVisible = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -83,12 +84,16 @@ class _SigninState extends State<Signin> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      buildOutlinedButton("Login", () {
-                        handleLogin();
-                      }),
+                      _isLoading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : buildOutlinedButton("Login", () {
+                              handleLogin();
+                            }),
                       const SizedBox(width: 20),
-                      buildOutlinedButton("Signup", () {
-                        navigateToSignup();
+                      buildOutlinedButton("Register", () {
+                        navigateToregister();
                       }),
                     ],
                   ),
@@ -270,6 +275,10 @@ class _SigninState extends State<Signin> {
         ),
       );
     } else {
+      setState(() {
+        _isLoading = true;
+      });
+
       FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: emailController.text, password: passwordController.text)
@@ -284,13 +293,17 @@ class _SigninState extends State<Signin> {
             content: Text("Error - Username/Password not matched."),
           ),
         );
+      }).whenComplete(() {
+        setState(() {
+          _isLoading = false;
+        });
       });
     }
   }
 
-  void navigateToSignup() {
+  void navigateToregister() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const Signup(),
+      builder: (context) => const register(),
     ));
   }
 
