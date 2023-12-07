@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, unnecessary_null_comparison, use_build_context_synchronously
 
-import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/home_page.dart';
 import 'package:ai_driven_essay_application_flutter/signin.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +180,7 @@ class LandingPageState extends State<LandingPage> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const EssayMyHomePage(),
+              builder: (context) => const HomePage(),
             ));
       } else {
         Navigator.pushReplacement(

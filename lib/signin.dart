@@ -1,6 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, avoid_print
 
-import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/home_page.dart';
 import 'package:ai_driven_essay_application_flutter/landing_page.dart';
 import 'package:ai_driven_essay_application_flutter/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -276,7 +276,7 @@ class _SigninState extends State<Signin> {
           .then((value) {
         changevalSharedPreferences();
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const EssayMyHomePage(),
+          builder: (context) => const HomePage(),
         ));
       }).onError((error, stackTrace) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -318,7 +318,7 @@ class _SigninState extends State<Signin> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const EssayMyHomePage(),
+            builder: (context) => const HomePage(),
           ),
         );
         print("User signed in: ${user.user!.displayName}");

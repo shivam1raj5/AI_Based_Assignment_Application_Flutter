@@ -26,7 +26,7 @@ class MainApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const LandingPage(),
+      home: const LandingPage(),      
     );
   }
 }
