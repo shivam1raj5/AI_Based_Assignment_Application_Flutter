@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, unnecessary_null_comparison, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, unnecessary_null_comparison, use_build_context_synchronously, constant_identifier_names
 
 import 'package:ai_driven_essay_application_flutter/home_page.dart';
 import 'package:ai_driven_essay_application_flutter/signin.dart';

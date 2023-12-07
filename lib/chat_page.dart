@@ -40,8 +40,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    const String subject1 = 'Title : ';
-    String subject2 = widget.question;
+    String subject = widget.question;
 
     return SafeArea(
       child: Scaffold(
@@ -66,19 +65,10 @@ class _ChatPageState extends State<ChatPage> {
                     Container(
                       padding: const EdgeInsets.all(8),
                       child: Text(
-                        "$subject1$subject2",
-                        style: const TextStyle(color: Colors.white, fontSize: 15),
+                        subject,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 15),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.share),
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Share function not available.')),
-                        );
-                      },
-                      color: Colors.white,
                     ),
                   ],
                 ),

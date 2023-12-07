@@ -1,4 +1,7 @@
+import 'package:ai_driven_essay_application_flutter/application_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/assignment_home_page.dart';
 import 'package:ai_driven_essay_application_flutter/essay_home_page.dart';
+import 'package:ai_driven_essay_application_flutter/latter_home_page.dart';
 import 'package:ai_driven_essay_application_flutter/widgets/video_data.dart';
 import 'package:flutter/material.dart';
 import 'package:floating_action_bubble/floating_action_bubble.dart';
@@ -80,6 +83,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<Bubble> _buildBubbleItems(BoxConstraints constraints) {
     return [
       _buildBubbleEssay("Essay", Icons.home, constraints),
+      _buildBubbleLatter("Latter", Icons.home, constraints),
       _buildBubbleApplication("Application", Icons.home, constraints),
       _buildBubbleAssignment("Assignment", Icons.home, constraints),
     ];
@@ -104,6 +108,25 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
+  Bubble _buildBubbleLatter(
+      String title, IconData icon, BoxConstraints constraints) {
+    return Bubble(
+      title: title,
+      iconColor: const Color.fromRGBO(11, 240, 255, 1),
+      bubbleColor: const Color.fromARGB(255, 42, 42, 42),
+      icon: icon,
+      titleStyle: TextStyle(
+        fontSize: constraints.maxWidth * 0.04,
+        color: const Color.fromARGB(255, 0, 255, 174),
+      ),
+      onPress: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const LatterMyHomePage(),
+        ));
+      },
+    );
+  }
+
   Bubble _buildBubbleApplication(
       String title, IconData icon, BoxConstraints constraints) {
     return Bubble(
@@ -117,7 +140,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       onPress: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const EssayMyHomePage(),
+          builder: (context) => const ApplicationMyHomePage(),
         ));
       },
     );
@@ -136,7 +159,7 @@ class HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
       onPress: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const EssayMyHomePage(),
+          builder: (context) => const AssignmentMyHomePage(),
         ));
       },
     );

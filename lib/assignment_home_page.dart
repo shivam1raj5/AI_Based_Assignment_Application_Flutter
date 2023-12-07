@@ -3,23 +3,23 @@ import 'package:ai_driven_essay_application_flutter/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_driven_essay_application_flutter/chat_page.dart';
 
-class EssayMyHomePage extends StatefulWidget {
-  const EssayMyHomePage({
+class AssignmentMyHomePage extends StatefulWidget {
+  const AssignmentMyHomePage({
     super.key,
   });
 
   @override
-  State<EssayMyHomePage> createState() => _EssayMyHomePageState();
+  State<AssignmentMyHomePage> createState() => _AssignmentMyHomePageState();
 }
 
-class _EssayMyHomePageState extends State<EssayMyHomePage> {
+class _AssignmentMyHomePageState extends State<AssignmentMyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  String s1 = 'Write an essay on ',
+  String s1 = 'Describe ',
       s2 = ' include ',
       s3 = ' in ',
       s4 = ' language in ',
       s5 = ' words.',
-      title = 'Topic :- ';
+      title = 'Question :- ';
 
   final TextEditingController _questionController = TextEditingController();
   String question = '';
@@ -75,7 +75,7 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: 'Essays ',
+                                    text: 'Assignment ',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Color.fromRGBO(0, 255, 194, 1),
@@ -120,7 +120,7 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                         expands: true,
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(
-                          hintText: 'Write a best match title/prompt',
+                          hintText: 'Question',
                           hintStyle: TextStyle(
                             color: Color.fromRGBO(112, 108, 108, 39),
                             fontFamily: 'Poppins',

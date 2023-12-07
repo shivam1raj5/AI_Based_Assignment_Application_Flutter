@@ -3,24 +3,27 @@ import 'package:ai_driven_essay_application_flutter/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_driven_essay_application_flutter/chat_page.dart';
 
-class EssayMyHomePage extends StatefulWidget {
-  const EssayMyHomePage({
+class LatterMyHomePage extends StatefulWidget {
+  const LatterMyHomePage({
     super.key,
   });
 
   @override
-  State<EssayMyHomePage> createState() => _EssayMyHomePageState();
+  State<LatterMyHomePage> createState() => _LatterMyHomePageState();
 }
 
-class _EssayMyHomePageState extends State<EssayMyHomePage> {
+class _LatterMyHomePageState extends State<LatterMyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  String s1 = 'Write an essay on ',
-      s2 = ' include ',
-      s3 = ' in ',
-      s4 = ' language in ',
-      s5 = ' words.',
-      title = 'Topic :- ';
+  String s1 = 'Write a latter to ',
+      s2 = ' and tell ',
+      s3 = ' include ',
+      s4 = ' in ',
+      s5 = ' language in ',
+      s6 = ' words.',
+      title = 'Subject :- ';
 
+  final TextEditingController _toController = TextEditingController();
+  String to = '';
   final TextEditingController _questionController = TextEditingController();
   String question = '';
 
@@ -75,7 +78,7 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: 'Essays ',
+                                    text: 'Latter ',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Color.fromRGBO(0, 255, 194, 1),
@@ -102,7 +105,44 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                     ),
                     Container(
                       width: screenWidth * 0.9,
-                      height: screenHeight * 0.23,
+                      height: screenHeight * 0.065,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: const Color.fromRGBO(11, 240, 255, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: TextField(
+                        controller: _toController,
+                        onChanged: (value) {
+                          setState(() {
+                            to = value;
+                          });
+                        },
+                        maxLines: null,
+                        expands: true,
+                        keyboardType: TextInputType.multiline,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'To -',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(112, 108, 108, 39),
+                            fontFamily: 'Poppins',
+                          ),
+                          contentPadding: EdgeInsets.all(12.0),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                        cursorColor: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.15,
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: const Color.fromRGBO(11, 240, 255, 1),
@@ -120,7 +160,7 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                         expands: true,
                         keyboardType: TextInputType.multiline,
                         decoration: const InputDecoration(
-                          hintText: 'Write a best match title/prompt',
+                          hintText: 'Description of latter',
                           hintStyle: TextStyle(
                             color: Color.fromRGBO(112, 108, 108, 39),
                             fontFamily: 'Poppins',
@@ -303,7 +343,7 @@ class _EssayMyHomePageState extends State<EssayMyHomePage> {
                             } else {
                               setState(() {
                                 finalQuestion =
-                                    "$s1$question$s2$tags$s3$language$s4$wordsize$s5";
+                                    "$s1$to$s2$question$s3$tags$s4$language$s5$wordsize$s6";
                                 title = "$title$question";
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => ChatPage(
