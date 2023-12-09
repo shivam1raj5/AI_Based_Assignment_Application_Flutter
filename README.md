@@ -1,16 +1,26 @@
-# ai_driven_essay_application_flutter
+# ai_driven_assignment_application_flutter
 
-• AI Based Essay Generator Application<br>
+# • AI Based Assignment Generator Application<br>
 
 Flutter, Dart, ChatGPT API <br>
 
-• The power of AI models lies in their ability to effortlessly assist users in generating high-quality essays.<br>
-• Smart algorithms ensure coherence and relevance in the generated essays.<br>
+• An AI-driven app has been developed to seamlessly assist users in effortlessly generating high-quality content.<br>
+• Smart algorithms ensure coherence and relevance in the generated assignment.<br>
 
 
 ## 📷 Previews
 
 <p align="center">
+<img src="previews/preview16.jpg" alt="drawing" width="269px" />
+<img src="previews/preview17.jpg" alt="drawing" width="270px" />
+<img src="previews/preview18.jpg" alt="drawing" width="269px" />
+<img src="previews/preview19.jpg" alt="drawing" width="269px" />
+<img src="previews/preview20.jpg" alt="drawing" width="270px" />
+<img src="previews/preview21.jpg" alt="drawing" width="269px" />
+<img src="previews/preview22.jpg" alt="drawing" width="269px" />
+<img src="previews/preview23.jpg" alt="drawing" width="270px" />
+<img src="previews/preview24.jpg" alt="drawing" width="269px" />
+<img src="previews/preview25.jpg" alt="drawing" width="269px" />
 <img src="previews/preview1.png" alt="drawing" width="270px" />
 <img src="previews/preview2.png" alt="drawing" width="270px" />
 <img src="previews/preview3.png" alt="drawing" width="269px" />
@@ -25,6 +35,21 @@ Flutter, Dart, ChatGPT API <br>
 <img src="previews/preview13.png" alt="drawing" width="269px" />
 <img src="previews/preview14.png" alt="drawing" width="269px" />
 <img src="previews/preview15.png" alt="drawing" width="269px" />
+<img src="previews/preview26.jpg" alt="drawing" width="269px" />
+<img src="previews/preview27.jpg" alt="drawing" width="270px" />
+<img src="previews/preview28.jpg" alt="drawing" width="269px" />
+<img src="previews/preview29.jpg" alt="drawing" width="269px" />
+<img src="previews/preview30.jpg" alt="drawing" width="270px" />
+<img src="previews/preview31.jpg" alt="drawing" width="269px" />
+<img src="previews/preview32.jpg" alt="drawing" width="269px" />
+<img src="previews/preview33.jpg" alt="drawing" width="270px" />
+<img src="previews/preview34.jpg" alt="drawing" width="269px" />
+<img src="previews/preview35.jpg" alt="drawing" width="269px" />
+<img src="previews/preview36.jpg" alt="drawing" width="270px" />
+<img src="previews/preview37.jpg" alt="drawing" width="269px" />
+<img src="previews/preview38.jpg" alt="drawing" width="269px" />
+<img src="previews/preview39.jpg" alt="drawing" width="270px" />
+<img src="previews/preview40.jpg" alt="drawing" width="269px" />
 </p>
 
 ## Getting Started
